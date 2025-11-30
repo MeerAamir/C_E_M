@@ -1,5 +1,5 @@
 {
-    "name": "competitive-exam-system",
+    "name": "competitive-exam-management-system",
     "version": "1.0.0",
     "description": "Root package to manage Competitive Exam System",
     "scripts": {

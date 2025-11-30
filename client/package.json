@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "homepage": "https://MeerAamir.github.io/C_E_M",
+  "homepage": "https://MeerAamir.github.io/Competitive-Exam-Management-System",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
