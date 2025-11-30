@@ -15,7 +15,6 @@ const TakeExam = () => {
     const [showSubmitModal, setShowSubmitModal] = useState(false);
     const [filterFlagged, setFilterFlagged] = useState(false);
 
-    const token = localStorage.getItem('token');
     const timerRef = useRef(null);
 
     // Load Exam & Restore State
@@ -57,7 +56,7 @@ const TakeExam = () => {
             handleSubmit();
         }
         return () => clearInterval(timerRef.current);
-    }, [timeLeft, exam, examId]);
+    }, [timeLeft, exam, examId]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Navigation Protection
     useEffect(() => {

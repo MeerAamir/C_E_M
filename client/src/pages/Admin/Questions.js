@@ -72,7 +72,7 @@ const Questions = () => {
 
     useEffect(() => {
         fetchQuestions();
-    }, [page, search, filterSubject, filterDifficulty, sort]);
+    }, [page, search, filterSubject, filterDifficulty, sort]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const fetchSubjects = async () => {
         try {
@@ -463,7 +463,7 @@ const Questions = () => {
                         <p style={{ color: '#a0aec0', fontSize: '0.9rem', marginBottom: '1rem' }}>
                             Format: <code>Q. Question... A) Opt1... Answer: A</code> OR CSV: <code>Question,Opt1,Opt2,Opt3,Opt4,AnswerChar</code>
                             <br />
-                            <a href="#" onClick={(e) => { e.preventDefault(); alert("Examples:\n1. Numbered:\n1. What is 2+2?\nA) 3\nB) 4\nC) 5\nD) 6\nAnswer: B\n\n2. CSV:\nWhat is 2+2?,3,4,5,6,B"); }} style={{ color: '#4299e1', marginLeft: '10px' }}>View Sample Formats</a>
+                            <button type="button" onClick={(e) => { e.preventDefault(); alert("Examples:\n1. Numbered:\n1. What is 2+2?\nA) 3\nB) 4\nC) 5\nD) 6\nAnswer: B\n\n2. CSV:\nWhat is 2+2?,3,4,5,6,B"); }} style={{ color: '#4299e1', marginLeft: '10px', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>View Sample Formats</button>
                         </p>
 
                         <select className={styles.input} style={{ marginBottom: '1rem' }} value={importSubjectId} onChange={e => setImportSubjectId(e.target.value)} required>

@@ -4,7 +4,7 @@ import styles from './Admin.module.css';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [roleFilter, setRoleFilter] = useState('');
 
@@ -19,7 +19,7 @@ const Users = () => {
 
     useEffect(() => {
         fetchUsers();
-    }, [search, roleFilter]);
+    }, [search, roleFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const fetchUsers = async () => {
         setLoading(true);

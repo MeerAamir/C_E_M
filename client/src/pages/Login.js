@@ -147,7 +147,7 @@ const Login = ({ onLogin }) => {
                                 <input type="checkbox" className={styles.checkbox} />
                                 Remember me
                             </label>
-                            <a href="#" onClick={(e) => e.preventDefault()} className={styles.forgotLink}>Forgot Password?</a>
+                            <button type="button" onClick={(e) => e.preventDefault()} className={styles.forgotLink} style={{ background: 'none', border: 'none', padding: 0 }}>Forgot Password?</button>
                         </div>
 
                         <button type="submit" className={styles.submitBtn} disabled={loading}>
