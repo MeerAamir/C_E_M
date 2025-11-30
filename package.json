@@ -2,7 +2,6 @@
     "name": "competitive-exam-system",
     "version": "1.0.0",
     "description": "Root package to manage Competitive Exam System",
-    "homepage": "https://MeerAamir.github.io/C_E_M",
     "scripts": {
         "start": "npx concurrently \"npm run server\" \"npm run client\"",
         "server": "npm start --prefix server",
