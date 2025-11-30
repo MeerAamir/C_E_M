@@ -9,7 +9,12 @@ server/database.sqlite
 # Environment files
 .env*
 !.env.example
-!client/.env.production
+!server/.env.example
+!client/.env.example
+
+# Build artifacts
+client/build/
+*.zip
 
 # Misc
 .DS_Store

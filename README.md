@@ -1,94 +1,217 @@
-# Competitive Exam Management System (Production Ready)
+# Competitive Exam Management System
 
-A comprehensive, full-stack web application for managing and taking competitive exams, featuring a modern dark/neon UI, advanced admin controls, and robust student assessment tools.
+A comprehensive, full-stack web application for managing and taking competitive exams with role-based access control, real-time exam timer, and instant performance analytics.
 
-## Key Features
+## 📋 Overview
 
-### 🎨 UI/UX Overhaul
-- **Modern Dark Theme**: Consistent neon-accented dark mode across all pages.
-- **Responsive Layouts**: Full-width Login/Register pages and a responsive Dashboard with Sidebar/TopNav.
-- **Polished Components**: Custom cards, badges, modals, and toast notifications.
+**Tech Stack:**
+- **Frontend:** React 19, React Router, Axios, CSS Modules, Bootstrap
+- **Backend:** Node.js, Express.js, Sequelize ORM
+- **Database:** PostgreSQL (production) / SQLite (development)
+- **Authentication:** JWT with bcrypt password hashing
 
-### 👨‍💻 Admin Dashboard
-- **Advanced Question Bank**: 
-    - **Search & Filter**: Filter by Subject, Difficulty, Date Range.
-    - **Selection & Bulk Actions**: Select multiple questions to **Export** or **Move** them in bulk.
-    - **Multi-Format Export**: Export questions to **JSON, CSV, XLSX, PDF, or DOCX**.
-    - **Bulk Import**: Paste text or upload PDF with a **Preview Modal** that highlights errors and allows row exclusion.
-- **Subject Management**:
-    - **Strict Isolation**: Questions are strictly tied to subjects.
-    - **Move Questions**: Easily move questions between subjects (individually or in bulk).
-    - **Custom Subjects**: Create new subjects on the fly during question creation or move.
-- **User Management**: 
-    - View all users with search and role filters.
-    - **Actions**: Promote to Admin, Demote to Student, Reset Password.
-- **Exam Management**: Create exams with specific durations and question counts. Toggle "Draft/Published" status.
+## 🚀 Quick Start (Local Development)
 
-### 🎓 Student Experience
-- **Exam Interface**: 
-    - **Auto-Save**: Answers are saved locally to prevent data loss on reload.
-    - **Integrity**: Browser navigation warnings and disabled back button.
-    - **Timer**: Sticky countdown timer.
-    - **Question Palette**: Flag questions for review and filter by status.
-- **Instant Results**: Detailed score breakdown immediately after submission.
+### Prerequisites
+- Node.js >= 18.0.0
+- npm or yarn
 
-## Setup Instructions
+### Installation & Setup
 
-1.  **Install Dependencies**:
-    Open a terminal in the project root and run:
-    ```bash
-    npm run install-all
-    ```
-    *This will install dependencies for the root, server, and client.*
+```bash
+# Clone the repository
+git clone https://github.com/MeerAamir/C_E_M.git
+cd C_E_M
 
-2.  **Database Setup**:
-    - The system supports SQLite (default for dev/test) and MySQL/PostgreSQL.
-    - **Seeding**: Populate the database with realistic data (Subjects: English, Math, Science, Reasoning, CS, GK, Urdu, Social Studies).
-    ```bash
-    npm run seed -- --force
-    ```
-    *Use `--force` to reset the database and re-seed from scratch.*
+# Install all dependencies (root, server, client)
+npm run install-all
 
-3.  **Run Application**:
-    ```bash
-    npm start
-    ```
-    *This will launch both the Server (port 5000) and Client (port 3000) concurrently.*
+# Seed the database with sample data
+npm run seed
 
-## Testing
+# Start both server and client concurrently
+npm start
+```
 
-The project includes automated backend tests for critical functionalities like Export and Question Movement.
+The application will be available at:
+- **Frontend:** http://localhost:3000
+- **Backend API:** http://localhost:5000
 
-To run the tests:
+### Manual Setup (Alternative)
+
+If you prefer to run server and client separately:
+
+```bash
+# Terminal 1 - Start Backend Server
+cd server
+npm install
+# Create .env file from .env.example and configure
+npm start
+
+# Terminal 2 - Start Frontend Client
+cd client
+npm install
+npm start
+```
+
+### Database Seeding
+
+To populate the database with sample data (subjects, questions, users):
+
+```bash
+# From project root
+npm run seed
+
+# Force reset and reseed (deletes existing data)
+npm run seed -- --force
+```
+
+**Sample Credentials:**
+- **Admin:** admin@demo.com / Admin123
+- **Student:** student@demo.com / Student123
+
+### Production Build
+
+```bash
+# Build optimized production frontend
+cd client
+npm run build
+
+# Output will be in client/build/
+```
+
+## 📂 Project Structure
+
+```
+C_E_M/
+├── client/               # React frontend application
+│   ├── src/
+│   │   ├── pages/       # Page components (Login, Dashboard, Admin, etc.)
+│   │   ├── components/  # Reusable components
+│   │   ├── utils/       # API utilities, helpers
+│   │   └── App.js       # Main app component
+│   ├── public/
+│   └── package.json
+├── server/              # Express.js backend API
+│   ├── controllers/     # Route controllers (auth, admin, user)
+│   ├── models/          # Sequelize database models
+│   ├── routes/          # API route definitions
+│   ├── middleware/      # Authentication middleware
+│   ├── db/              # Database configuration
+│   ├── tests/           # Jest/Supertest API tests
+│   ├── seed.js          # Database seeding script
+│   └── index.js         # Server entry point
+├── docs/                # Documentation and screenshots
+├── DEPLOYMENT_GUIDE.md  # Production deployment instructions
+├── NETLIFY_FIX.md       # Netlify-specific deployment guide
+└── package.json         # Root package (scripts for both apps)
+```
+
+## ✨ Key Features
+
+### Admin Dashboard
+- **Question Bank Management:**
+  - Search, filter by subject/difficulty
+  - Bulk import from PDF/text with validation
+  - Multi-format export (JSON, CSV, XLSX, PDF, DOCX)
+  - Move questions between subjects
+- **Exam Management:** Create/edit exams with configurable duration and question count
+- **User Management:** View all users, promote/demote roles, reset passwords
+
+
+## 🧪 Testing
+
+Run automated backend tests:
+
 ```bash
 cd server
 npm test
 ```
-*Note: Tests run in an in-memory SQLite database and do not affect your main data.*
 
-## Feature Guides
+Tests cover:
+- Authentication APIs
+- Question CRUD operations
+- Export functionality
+- Bulk import/move operations
 
-### Exporting Questions
-1.  Go to **Question Bank**.
-2.  **Export All**: Click "Export Questions" in the filter bar. Select format (CSV, PDF, etc.) and filters.
-3.  **Export Selected**: Check the boxes next to specific questions. Click "Actions" > "Export Selected".
+## 📊 What Was Fixed/Improved
 
-### Moving Questions
-1.  **Single**: Click the "Move" button on a question row. Select the new subject.
-2.  **Bulk**: Select multiple questions. Click "Actions" > "Move Selected". Choose the target subject.
+### Recent Updates (v1.0.0)
+- ✅ **Netlify Deployment:** Fixed homepage path for root deployment
+- ✅ **Node Version:** Pinned to Node.js 18 via `.nvmrc` and `package.json`
+- ✅ **ESLint Compliance:** Resolved all CI build errors
+  - Removed unused variables
+  - Fixed useEffect dependencies
+  - Replaced invalid anchors with buttons
+- ✅ **CORS Configuration:** Configured for GitHub Pages and Netlify origins
+- ✅ **Production Ready:** Backend configured for Render.com with PostgreSQL
 
-### Bulk Import
-1.  Click "Bulk Paste" or "Upload PDF".
-2.  Paste questions in the format: `Q. Question text... A) Option1... Answer: A`.
-3.  Click "Preview Import".
-4.  Review the parsed questions. Uncheck any invalid rows.
-5.  Click "Confirm Import".
+## 📖 Assessment / How to Grade
 
-## Credentials
-- **Admin**: `admin@demo.com` / `Admin123`
-- **Student**: `student@demo.com` / `Student123`
+### Quick Evaluation Guide
 
-## Tech Stack
-- **Frontend**: React, CSS Modules (Dark Theme), Axios.
-- **Backend**: Node.js, Express, Sequelize (SQLite/MySQL).
-- **Libraries**: `pdf-parse`, `json2csv`, `xlsx`, `pdfkit`, `docx`, `bcrypt`, `jest`, `supertest`.
+**1. Project Setup (5 min):**
+- Clone repository
+- Run `npm run install-all`
+- Run `npm run seed`
+- Run `npm start`
+- Access http://localhost:3000
+
+**2. Key Files to Review:**
+- `server/index.js` - Main server configuration, CORS, routes
+- `server/controllers/` - Business logic for auth, admin, user operations
+- `server/models/` - Database schema definitions
+- `client/src/pages/Admin/Questions.js` - Advanced question bank interface
+- `client/src/pages/TakeExam.js` - Exam-taking experience with timer
+- `server/seed.js` - Sample data generation
+
+**3. Sample Exam Flow:**
+- Login as student (`student@demo.com` / `Student123`)
+- Navigate to "Available Exams"
+- Click"Take Exam" on any published exam
+- Answer questions and observe:
+  - Timer countdown
+  - Auto-save functionality
+  - Question palette
+  - Flag/unflag questions
+- Submit exam
+- View instant results
+
+**4. Admin Features:**
+- Login as admin (`admin@demo.com` / `Admin123`)
+- Navigate to "Question Bank"
+- Test filtering, search, bulk selection
+- Try importing questions (Bulk Paste tab)
+- Export questions in different formats
+- Navigate to "Exams" and create a new exam
+
+**5. Code Quality:**
+- Check `server/tests/` for automated test coverage
+- Verify environment variable handling (`.env.example` files)
+- Review CORS configuration for security
+- Check error handling in controllers
+
+## 🔒 Security Notes
+
+- Never commit `.env` files with real credentials
+- Use `.env.example` as template
+- Generate strong JWT_SECRET for production
+- Configure CORS appropriately for production domains
+
+## 📄 License
+
+This project is for educational purposes.
+
+## 👥 Contributors
+
+- Meer Aamir - Full Stack Development
+
+## 📞 Support
+
+For deployment instructions, see:
+- [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) - Render.com backend deployment
+- [NETLIFY_FIX.md](./NETLIFY_FIX.md) - Netlify frontend deployment
+
+---
+
+**Note:** This is production-ready code with comprehensive error handling, security features, and deployment configurations for both frontend (Netlify/GitHub Pages) and backend (Render.com with PostgreSQL).
