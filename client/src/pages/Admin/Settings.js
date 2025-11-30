@@ -17,11 +17,11 @@ const Settings = () => {
                 <div className={styles.grid}>
                     <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', color: '#a0aec0' }}>API Base URL</label>
-                        <input className={styles.input} value="http://localhost:5000" disabled />
+                        <input className={styles.input} value={process.env.REACT_APP_API_URL || 'http://localhost:5000'} disabled />
                     </div>
                     <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', color: '#a0aec0' }}>Environment</label>
-                        <input className={styles.input} value="Development" disabled />
+                        <input className={styles.input} value={process.env.NODE_ENV || 'Development'} disabled />
                     </div>
                 </div>
 

@@ -6,7 +6,11 @@ server/node_modules/
 # Ignore database
 server/database.sqlite
 
+# Environment files
+.env*
+!.env.example
+!client/.env.production
+
 # Misc
 .DS_Store
-.env
 .vscode/

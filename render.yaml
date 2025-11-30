@@ -1,0 +1,40 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: competitive-exam-backend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_DIALECT
+        value: postgres
+      - key: DB_NAME
+        fromDatabase:
+          name: competitive-exam-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: competitive-exam-db
+          property: user
+      - key: DB_PASS
+        fromDatabase:
+          name: competitive-exam-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: competitive-exam-db
+          property: host
+
+  # PostgreSQL Database
+  - type: pserv
+    name: competitive-exam-db
+    env: docker
+    region: oregon
+    plan: free
+    ipAllowList: []
