@@ -2,15 +2,19 @@
     "name": "competitive-exam-system",
     "version": "1.0.0",
     "description": "Root package to manage Competitive Exam System",
+    "homepage": "https://MeerAamir.github.io/C_E_M",
     "scripts": {
         "start": "npx concurrently \"npm run server\" \"npm run client\"",
         "server": "npm start --prefix server",
         "client": "npm start --prefix client",
         "install-all": "npm install && npm install --prefix server && npm install --prefix client",
         "seed": "npm run seed --prefix server",
-        "build": "npm run build --prefix client"
+        "build": "npm run build --prefix client",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d client/build"
     },
     "devDependencies": {
-        "concurrently": "^8.2.0"
+        "concurrently": "^8.2.0",
+        "gh-pages": "^6.3.0"
     }
 }

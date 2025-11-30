@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './Student/Student.module.css';
 
@@ -16,14 +16,13 @@ const TakeExam = () => {
     const [filterFlagged, setFilterFlagged] = useState(false);
 
     const token = localStorage.getItem('token');
-    const config = { headers: { Authorization: `Bearer ${token}` } };
     const timerRef = useRef(null);
 
     // Load Exam & Restore State
     useEffect(() => {
         const fetchExam = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/user/exam/${examId}/questions`, config);
+                const res = await api.get(`/user/exam/${examId}/questions`);
                 setExam(res.data.exam);
                 setQuestions(res.data.questions);
 
@@ -95,12 +94,12 @@ const TakeExam = () => {
     const handleSubmit = async () => {
         clearInterval(timerRef.current);
         try {
-            const res = await axios.post('http://localhost:5000/user/exam/submit', {
+            const res = await api.post('/user/exam/submit', {
                 examId,
                 answers,
                 questionOrder: questions.map(q => q.id),
                 timeTaken: (exam.duration * 60) - timeLeft
-            }, config);
+            });
 
             // Clear storage
             localStorage.removeItem(`exam_${examId}_answers`);

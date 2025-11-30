@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Link } from 'react-router-dom';
 
 const UserDashboard = () => {
     const [exams, setExams] = useState([]);
     const [myResults, setMyResults] = useState([]);
 
-    const token = localStorage.getItem('token');
-    const config = { headers: { Authorization: `Bearer ${token}` } };
-
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const examRes = await axios.get('http://localhost:5000/user/exams', config);
+                const examRes = await api.get('/user/exams');
                 setExams(examRes.data);
-                const resultRes = await axios.get('http://localhost:5000/user/my-results', config);
+                const resultRes = await api.get('/user/my-results');
                 setMyResults(resultRes.data);
             } catch (err) {
                 console.error(err);

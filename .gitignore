@@ -1,11 +1,12 @@
-
 # Ignore node modules
 node_modules/
 client/node_modules/
 server/node_modules/
 
-# Ignore database and node_modules
+# Ignore database
 server/database.sqlite
-node_modules/
-client/node_modules/
-server/node_modules/
+
+# Misc
+.DS_Store
+.env
+.vscode/

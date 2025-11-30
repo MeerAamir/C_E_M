@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState('exams');
@@ -11,8 +11,7 @@ const AdminDashboard = () => {
     const [newSubject, setNewSubject] = useState('');
     const [newQuestion, setNewQuestion] = useState({ text: '', options: ['', '', '', ''], correctOption: 0, difficulty: 'medium', SubjectId: '' });
 
-    const token = localStorage.getItem('token');
-    const config = { headers: { Authorization: `Bearer ${token}` } };
+
 
     useEffect(() => {
         fetchData();
@@ -21,18 +20,18 @@ const AdminDashboard = () => {
     const fetchData = async () => {
         try {
             if (activeTab === 'exams') {
-                const res = await axios.get('http://localhost:5000/admin/exams', config);
+                const res = await api.get('/admin/exams');
                 setExams(res.data);
             } else if (activeTab === 'subjects') {
-                const res = await axios.get('http://localhost:5000/admin/subjects', config);
+                const res = await api.get('/admin/subjects');
                 setSubjects(res.data);
             } else if (activeTab === 'questions') {
-                const res = await axios.get('http://localhost:5000/admin/questions', config);
-                const subRes = await axios.get('http://localhost:5000/admin/subjects', config);
+                const res = await api.get('/admin/questions');
+                const subRes = await api.get('/admin/subjects');
                 setQuestions(res.data);
                 setSubjects(subRes.data);
             } else if (activeTab === 'results') {
-                const res = await axios.get('http://localhost:5000/admin/results', config);
+                const res = await api.get('/admin/results');
                 setResults(res.data);
             }
         } catch (err) {
@@ -42,14 +41,14 @@ const AdminDashboard = () => {
 
     const handleCreateExam = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:5000/admin/exams', newExam, config);
+        await api.post('/admin/exams', newExam);
         fetchData();
         setNewExam({ title: '', duration: 30, questionCount: 10 });
     };
 
     const handleCreateSubject = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:5000/admin/subjects', { name: newSubject }, config);
+        await api.post('/admin/subjects', { name: newSubject });
         fetchData();
         setNewSubject('');
     };
@@ -61,7 +60,7 @@ const AdminDashboard = () => {
 
     const handleCreateQuestion = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:5000/admin/questions', newQuestion, config);
+        await api.post('/admin/questions', newQuestion);
         fetchData();
         setNewQuestion({ text: '', options: ['', '', '', ''], correctOption: 0, difficulty: 'medium', SubjectId: '' });
     };
@@ -73,8 +72,8 @@ const AdminDashboard = () => {
         formData.append('subjectId', importSubjectId);
 
         try {
-            await axios.post('http://localhost:5000/admin/upload-questions', formData, {
-                headers: { ...config.headers, 'Content-Type': 'multipart/form-data' }
+            await api.post('/admin/upload-questions', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
             alert('Questions imported successfully!');
             fetchData();
@@ -87,7 +86,7 @@ const AdminDashboard = () => {
     const handleBulkPaste = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/admin/bulk-questions', { text: bulkText, subjectId: importSubjectId }, config);
+            await api.post('/admin/bulk-questions', { text: bulkText, subjectId: importSubjectId });
             alert('Questions imported successfully!');
             fetchData();
             setBulkText('');
@@ -161,7 +160,7 @@ const AdminDashboard = () => {
                         {exams.map(e => (
                             <li key={e.id} className="list-group-item d-flex justify-content-between align-items-center">
                                 {e.title} ({e.duration} mins, {e.questionCount} Qs)
-                                <button className="btn btn-danger btn-sm" onClick={async () => { await axios.delete(`http://localhost:5000/admin/exams/${e.id}`, config); fetchData(); }}>Delete</button>
+                                <button className="btn btn-danger btn-sm" onClick={async () => { await api.delete(`/admin/exams/${e.id}`); fetchData(); }}>Delete</button>
                             </li>
                         ))}
                     </ul>
@@ -183,7 +182,7 @@ const AdminDashboard = () => {
                         {subjects.map(s => (
                             <li key={s.id} className="list-group-item d-flex justify-content-between align-items-center">
                                 {s.name}
-                                <button className="btn btn-danger btn-sm" onClick={async () => { await axios.delete(`http://localhost:5000/admin/subjects/${s.id}`, config); fetchData(); }}>Delete</button>
+                                <button className="btn btn-danger btn-sm" onClick={async () => { await api.delete(`/admin/subjects/${s.id}`); fetchData(); }}>Delete</button>
                             </li>
                         ))}
                     </ul>

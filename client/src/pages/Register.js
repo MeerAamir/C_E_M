@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './Login.module.css'; // Reuse Login styles for consistency
 
@@ -27,7 +27,7 @@ const Register = () => {
         }
 
         try {
-            await axios.post('http://localhost:5000/auth/register', formData);
+            await api.post('/auth/register', formData);
             navigate('/login');
         } catch (err) {
             setError(err.response?.data?.error || 'Registration failed. Try again.');
