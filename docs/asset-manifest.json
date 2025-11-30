@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Competitive-Exam-Management-System-/static/css/main.334b83ad.css",
-    "main.js": "/Competitive-Exam-Management-System-/static/js/main.96fda1ea.js",
+    "main.js": "/Competitive-Exam-Management-System-/static/js/main.27e101b1.js",
     "static/js/453.eb570f4f.chunk.js": "/Competitive-Exam-Management-System-/static/js/453.eb570f4f.chunk.js",
     "index.html": "/Competitive-Exam-Management-System-/index.html",
     "main.334b83ad.css.map": "/Competitive-Exam-Management-System-/static/css/main.334b83ad.css.map",
-    "main.96fda1ea.js.map": "/Competitive-Exam-Management-System-/static/js/main.96fda1ea.js.map",
+    "main.27e101b1.js.map": "/Competitive-Exam-Management-System-/static/js/main.27e101b1.js.map",
     "453.eb570f4f.chunk.js.map": "/Competitive-Exam-Management-System-/static/js/453.eb570f4f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.334b83ad.css",
-    "static/js/main.96fda1ea.js"
+    "static/js/main.27e101b1.js"
   ]
 }
