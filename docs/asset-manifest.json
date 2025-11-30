@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.334b83ad.css",
-    "main.js": "/static/js/main.8689a2ce.js",
-    "static/js/453.eb570f4f.chunk.js": "/static/js/453.eb570f4f.chunk.js",
-    "index.html": "/index.html",
-    "main.334b83ad.css.map": "/static/css/main.334b83ad.css.map",
-    "main.8689a2ce.js.map": "/static/js/main.8689a2ce.js.map",
-    "453.eb570f4f.chunk.js.map": "/static/js/453.eb570f4f.chunk.js.map"
+    "main.css": "/Competitive-Exam-Management-System-/static/css/main.334b83ad.css",
+    "main.js": "/Competitive-Exam-Management-System-/static/js/main.96fda1ea.js",
+    "static/js/453.eb570f4f.chunk.js": "/Competitive-Exam-Management-System-/static/js/453.eb570f4f.chunk.js",
+    "index.html": "/Competitive-Exam-Management-System-/index.html",
+    "main.334b83ad.css.map": "/Competitive-Exam-Management-System-/static/css/main.334b83ad.css.map",
+    "main.96fda1ea.js.map": "/Competitive-Exam-Management-System-/static/js/main.96fda1ea.js.map",
+    "453.eb570f4f.chunk.js.map": "/Competitive-Exam-Management-System-/static/js/453.eb570f4f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.334b83ad.css",
-    "static/js/main.8689a2ce.js"
+    "static/js/main.96fda1ea.js"
   ]
 }
