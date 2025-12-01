@@ -11,76 +11,28 @@ const api = axios.create({
     },
 });
 
-// Mock Adapter Logic
-if (IS_MOCK_MODE) {
-    console.warn('⚠️ RUNNING IN MOCK MODE - NO BACKEND CONNECTION');
-
-    api.interceptors.request.use(async (config) => {
-        await new Promise(resolve => setTimeout(resolve, 500)); // Simulate network delay
-
-        // Auth Routes
-        if (config.url.includes('/auth/login')) {
-            const { email } = JSON.parse(config.data);
-            const user = Object.values(MOCK_USERS).find(u => u.email === email);
-            if (user) {
-                return Promise.resolve({
-                    data: { token: user.token, user },
-                    status: 200,
-                    statusText: 'OK',
-                    headers: {},
-                    config
-                });
-            }
-        }
-
-        if (config.url.includes('/auth/register')) {
-            return Promise.resolve({
-                data: { message: 'Registration successful (Mock)', user: MOCK_USERS.student },
-                status: 201,
-            },
-                status: 200,
-                config
-            });
-}
-
-// Admin Routes
-if (config.url.includes('/admin')) {
-    return Promise.resolve({
-        data: { message: 'Admin action successful (Mock)' },
-        status: 200,
-        config
-    });
-}
-
-// Default Fallback
-return Promise.resolve({
-    data: { message: 'Mock response' },
-    status: 200,
-    config
-});
-    });
-}
-
-// Add a request interceptor if needed (e.g., for tokens)
+// Add a request interceptor for tokens
 api.interceptors.request.use(
     (config) => {
-        // Skip normal interceptor if we already handled it in mock (axios doesn't support this natively easily without an adapter, 
-        // but our mock logic above returns a Promise.resolve which effectively short-circuits if we were using a real adapter library.
-        // Since we are using a simple interceptor hack, we actually need to throw a special error or use an adapter.
-        // BETTER APPROACH: Use an adapter.
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
     },
     (error) => Promise.reject(error)
 );
 
-// Overwrite adapter for Mock Mode to prevent actual network calls
+// Mock Adapter Logic
 if (IS_MOCK_MODE) {
+    console.warn('⚠️ RUNNING IN MOCK MODE - NO BACKEND CONNECTION');
+
     api.defaults.adapter = async (config) => {
-        await new Promise(resolve => setTimeout(resolve, 600)); // Simulate delay
+        await new Promise(resolve => setTimeout(resolve, 600)); // Simulate network delay
 
         console.log(`[MOCK API] ${config.method.toUpperCase()} ${config.url}`);
 
-        // Login
+        // --- AUTH ROUTES ---
         if (config.url.includes('/auth/login')) {
             const data = JSON.parse(config.data);
             const user = Object.values(MOCK_USERS).find(u => u.email === data.email);
@@ -88,38 +40,54 @@ if (IS_MOCK_MODE) {
             return { data: { message: 'Invalid credentials' }, status: 401 };
         }
 
-        // Register
         if (config.url.includes('/auth/register')) {
             return { data: { message: 'Registered', user: MOCK_USERS.student }, status: 201 };
         }
 
-        // Get Exams
-        if (config.url.includes('/exam/available')) {
+        // --- STUDENT ROUTES ---
+
+        // Dashboard: Get Available Exams
+        // Matches /user/exams
+        if (config.url.includes('/user/exams')) {
             return { data: MOCK_EXAMS, status: 200 };
         }
 
-        // Take Exam (Questions)
-        if (config.url.match(/\/exam\/\d+/)) {
-            return { data: { exam: MOCK_EXAMS[0], questions: MOCK_QUESTIONS }, status: 200 };
-        }
-
-        // Submit Exam
-        if (config.url.includes('/exam/submit')) {
+        // Take Exam: Get Questions
+        // Matches /user/exam/:id/questions
+        if (config.url.includes('/user/exam/') && config.url.includes('/questions')) {
             return {
                 data: {
-                    score: 4,
-                    totalQuestions: 5,
-                    results: MOCK_QUESTIONS.map(q => ({ ...q, isCorrect: true }))
+                    exam: MOCK_EXAMS[0],
+                    questions: MOCK_QUESTIONS
                 },
                 status: 200
             };
         }
 
-        // Admin Stats
-        if (config.url.includes('/admin/stats')) {
-            return { data: { users: 150, exams: 12, questions: 500 }, status: 200 };
+        // Submit Exam
+        // Matches /user/exam/submit
+        if (config.url.includes('/user/exam/submit')) {
+            return {
+                data: {
+                    message: 'Exam submitted successfully',
+                    score: 80,
+                    total: 100,
+                    results: MOCK_QUESTIONS.map(q => ({
+                        questionId: q.id,
+                        correct: true,
+                        correctOption: q.correctOption
+                    }))
+                },
+                status: 200
+            };
         }
 
+        // --- ADMIN ROUTES ---
+        if (config.url.includes('/admin')) {
+            return { data: { message: 'Admin action successful (Mock)' }, status: 200 };
+        }
+
+        // Default Fallback
         return { data: { message: 'Mock Success' }, status: 200 };
     };
 }
