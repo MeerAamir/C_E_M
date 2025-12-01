@@ -37,65 +37,27 @@ if (IS_MOCK_MODE) {
             return Promise.resolve({
                 data: { message: 'Registration successful (Mock)', user: MOCK_USERS.student },
                 status: 201,
-                statusText: 'Created',
-                headers: {},
-                config
-            });
-        }
-
-        // Exam Routes
-        if (config.url.includes('/exam/available')) {
-            return Promise.resolve({
-                data: MOCK_EXAMS,
+            },
                 status: 200,
                 config
             });
-        }
+}
 
-        if (config.url.includes('/exam/') && config.method === 'get') {
-            // Get specific exam questions
-            return Promise.resolve({
-                data: {
-                    exam: MOCK_EXAMS[0],
-                    questions: MOCK_QUESTIONS
-                },
-                status: 200,
-                config
-            });
-        }
+// Admin Routes
+if (config.url.includes('/admin')) {
+    return Promise.resolve({
+        data: { message: 'Admin action successful (Mock)' },
+        status: 200,
+        config
+    });
+}
 
-        if (config.url.includes('/exam/submit')) {
-            return Promise.resolve({
-                data: {
-                    message: 'Exam submitted successfully',
-                    score: 80,
-                    total: 100,
-                    results: MOCK_QUESTIONS.map(q => ({
-                        questionId: q.id,
-                        correct: true,
-                        correctOption: q.correctOption
-                    }))
-                },
-                status: 200,
-                config
-            });
-        }
-
-        // Admin Routes
-        if (config.url.includes('/admin')) {
-            return Promise.resolve({
-                data: { message: 'Admin action successful (Mock)' },
-                status: 200,
-                config
-            });
-        }
-
-        // Default Fallback
-        return Promise.resolve({
-            data: { message: 'Mock response' },
-            status: 200,
-            config
-        });
+// Default Fallback
+return Promise.resolve({
+    data: { message: 'Mock response' },
+    status: 200,
+    config
+});
     });
 }
 
